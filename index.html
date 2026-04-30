@@ -34,7 +34,6 @@ body {
     animation: gradient 12s ease infinite;
 }
 
-/* Animated Background */
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -46,7 +45,6 @@ body {
     text-align: center;
 }
 
-/* Heading */
 h1 a {
     text-decoration: none;
     color: var(--text);
@@ -57,7 +55,7 @@ h1 a {
     backdrop-filter: blur(10px);
 }
 
-/* Toggle Button */
+/* Toggle */
 .toggle {
     position: absolute;
     top: 20px;
@@ -100,7 +98,7 @@ h1 a {
     color: #000;
 }
 
-/* Chess Board */
+/* Board */
 .board {
     margin-top: 20px;
     max-width: 900px;
@@ -116,11 +114,10 @@ h1 a {
     content: "♜ ♞ ♝ ♛ ♚ ♟";
     display: block;
     margin-bottom: 10px;
-    font-size: 18px;
     opacity: 0.7;
 }
 
-/* Smooth Animation */
+/* Smooth animation */
 .tab-content {
     display: none;
     opacity: 0;
@@ -168,7 +165,8 @@ h1 a {
 </div>
 
 <script>
-// 🔥 ONLY EDIT THIS ARRAY
+
+// 🔥 ONLY EDIT HERE
 const games = [
     15003339,
     15003683,
@@ -177,7 +175,7 @@ const games = [
     15003647
 ];
 
-// 🌗 Theme toggle + save
+// 🌗 Theme toggle
 function toggleMode() {
     document.body.classList.toggle("light");
     localStorage.setItem("theme",
@@ -193,7 +191,7 @@ window.onload = () => {
     generateGames();
 };
 
-// ⚡ Auto-generate buttons + tabs + iframes
+// Generate buttons + tabs + iframes
 function generateGames() {
     const btnContainer = document.getElementById("buttons");
     const contentContainer = document.getElementById("content");
@@ -208,28 +206,33 @@ function generateGames() {
         if (index === 0) btn.classList.add("active");
         btnContainer.appendChild(btn);
 
-        // Tab Content
+        // Tab
         const div = document.createElement("div");
         div.id = "game" + index;
         div.className = "tab-content board" + (index === 0 ? " active" : "");
 
         const iframe = document.createElement("iframe");
+
+        // ✅ IMPORTANT FIX
+        iframe.id = id;
+
         iframe.dataset.src = `https://www.chess.com/emboard?id=${id}`;
         iframe.style.width = "100%";
         iframe.style.border = "none";
+        iframe.style.minHeight = "500px"; // fallback
         iframe.loading = "lazy";
 
         div.appendChild(iframe);
         contentContainer.appendChild(div);
 
-        // Load first iframe immediately
+        // Load first game immediately
         if (index === 0) {
             iframe.src = iframe.dataset.src;
         }
     });
 }
 
-// 🔄 Tabs switching + lazy load
+// Tabs + lazy load
 function openTab(evt, tabName) {
     document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
     document.querySelectorAll(".tab-buttons button").forEach(b => b.classList.remove("active"));
@@ -244,7 +247,7 @@ function openTab(evt, tabName) {
     }
 }
 
-// 🔥 FIX: Resize chess boards automatically
+// 🔥 AUTO RESIZE FIX (VERY IMPORTANT)
 window.addEventListener("message", e => {
     if (e.data && e.data.id) {
         const iframe = document.getElementById(e.data.id);
@@ -253,7 +256,7 @@ window.addEventListener("message", e => {
         }
     }
 });
-    
+
 </script>
 
 </body>
