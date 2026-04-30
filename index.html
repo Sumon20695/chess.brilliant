@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Brilliant Moves</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+    --bg1: #1e3c72;
+    --bg2: #2a5298;
+    --text: #ffffff;
+    --card: rgba(255,255,255,0.1);
+}
+
+body.light {
+    --bg1: #f5f7fa;
+    --bg2: #c3cfe2;
+    --text: #111;
+    --card: rgba(0,0,0,0.05);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--text);
+    background: linear-gradient(-45deg, var(--bg1), var(--bg2), #000428, #004e92);
+    background-size: 400% 400%;
+    animation: gradient 12s ease infinite;
+    transition: 0.3s;
+}
+
+/* Animated Background */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    padding: 30px;
+    text-align: center;
+}
+
+/* Heading */
+h1 a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 2.5rem;
+    background: var(--card);
+    padding: 12px 25px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+h1 a:hover {
+    transform: scale(1.05);
+}
+
+/* Toggle Button */
+.toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: var(--card);
+}
+
+/* Tabs */
+.tabs {
+    margin-top: 30px;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tab-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
+}
+
+.tab-buttons button.active {
+    background: #ffcc00;
+    color: #000;
+}
+
+/* Chess Board Container */
+.board {
+    margin-top: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Chess icon decoration */
+.board::before {
+    content: "♜ ♞ ♝ ♛ ♚ ♟";
+    display: block;
+    margin-bottom: 10px;
+    font-size: 20px;
+    opacity: 0.7;
+}
+
+/* Hide tabs */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="toggle" onclick="toggleMode()">🌗 Toggle</div>
+
+<div class="container">
+
+<h1>
+<a href="https://www.chess.com/analysis/collection/brilliant-moves-a2yjTqFt/2p15VqLD7C/games" target="_blank">
+♟ Brilliant Moves
+</a>
+</h1>
+
+<div class="tabs">
+
+<div class="tab-buttons">
+<button class="active" onclick="openTab(event, 'game1')">Game 1</button>
+<!--<button onclick="openTab(event, 'game2')">Game 2</button>
+<button onclick="openTab(event, 'game3')">Game 3</button>-->
+</div>
+
+<!-- Game 1 -->
+<div id="game1" class="tab-content active board">
+<iframe id="15003339" allowtransparency="true" frameborder="0"
+style="width:100%;border:none;"
+src="https://www.chess.com/emboard?id=15003339"></iframe>
+</div>
+
+<!-- Game 2 -->
+<div id="game2" class="tab-content board">
+<iframe id="15003340" allowtransparency="true" frameborder="0"
+style="width:100%;border:none;"
+src="https://www.chess.com/emboard?id=15003340"></iframe>
+</div>
+
+<!-- Game 3 -->
+<div id="game3" class="tab-content board">
+<iframe id="15003341" allowtransparency="true" frameborder="0"
+style="width:100%;border:none;"
+src="https://www.chess.com/emboard?id=15003341"></iframe>
+</div>
+
+</div>
+</div>
+
+<script>
+// Dark/Light Mode
+function toggleMode() {
+    document.body.classList.toggle("light");
+}
+
+// Tabs
+function openTab(evt, tabName) {
+    let contents = document.querySelectorAll(".tab-content");
+    contents.forEach(c => c.classList.remove("active"));
+
+    let buttons = document.querySelectorAll(".tab-buttons button");
+    buttons.forEach(b => b.classList.remove("active"));
+
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+
+// Resize iframes dynamically
+window.addEventListener("message", e => {
+    if (e.data && e.data.id) {
+        let iframe = document.getElementById(e.data.id);
+        if (iframe) {
+            iframe.style.height = (e.data.frameHeight + 37) + "px";
+        }
+    }
+});
+</script>
+
+</body>
+</html>
