@@ -243,6 +243,17 @@ function openTab(evt, tabName) {
         iframe.src = iframe.dataset.src;
     }
 }
+
+// 🔥 FIX: Resize chess boards automatically
+window.addEventListener("message", e => {
+    if (e.data && e.data.id) {
+        const iframe = document.getElementById(e.data.id);
+        if (iframe) {
+            iframe.style.height = (e.data.frameHeight + 37) + "px";
+        }
+    }
+});
+    
 </script>
 
 </body>
